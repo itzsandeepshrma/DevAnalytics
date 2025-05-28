@@ -10,8 +10,8 @@
       padding: 0;
       height: 100%;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: #0d1117;
-      color: white;
+      background: linear-gradient(145deg, #0f001a, #1a002f);
+      color: #f0eaff;
       overflow-x: hidden;
     }
 
@@ -21,8 +21,8 @@
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle, #1f6feb55 0%, transparent 60%);
-      z-index: -1;
+      background: radial-gradient(circle at center, #c084fc33 0%, transparent 70%);
+      z-index: -2;
     }
 
     canvas.particles {
@@ -30,6 +30,7 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       z-index: -1;
+      pointer-events: none;
     }
 
     .container {
@@ -39,15 +40,16 @@
       background: rgba(255, 255, 255, 0.05);
       border-radius: 20px;
       backdrop-filter: blur(20px);
-      box-shadow: 0 0 40px #1f6feb77;
+      box-shadow: 0 0 40px #c084fc88;
       text-align: center;
     }
 
     h1 {
-      font-size: 2.5rem;
-      color: #58a6ff;
+      font-size: 2.7rem;
+      color: #d9a3ff;
       margin-bottom: 20px;
       letter-spacing: 2px;
+      text-shadow: 0 0 10px #c084fc;
     }
 
     .input-box {
@@ -61,9 +63,10 @@
       font-size: 1.1rem;
       border: none;
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.07);
+      background: rgba(255, 255, 255, 0.08);
       color: #fff;
       outline: none;
+      box-shadow: 0 0 10px #c084fc33 inset;
     }
 
     input::placeholder {
@@ -73,16 +76,17 @@
     button {
       padding: 15px 30px;
       font-size: 1rem;
-      background: #238636;
+      background: linear-gradient(135deg, #a855f7, #9333ea);
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       transition: 0.3s ease;
+      box-shadow: 0 0 15px #c084fc88;
     }
 
     button:hover {
-      background: #2ea043;
+      background: linear-gradient(135deg, #9333ea, #a855f7);
       transform: scale(1.05);
     }
 
@@ -91,7 +95,8 @@
     }
 
     .results h2 {
-      color: #58a6ff;
+      color: #e9d5ff;
+      text-shadow: 0 0 5px #c084fc88;
     }
 
     canvas#chart {
@@ -106,15 +111,15 @@
       cursor: pointer;
       font-size: 14px;
       padding: 8px 14px;
-      background: #161b22;
+      background: #2a003d;
       border-radius: 8px;
-      color: #58a6ff;
-      border: 1px solid #30363d;
+      color: #c084fc;
+      border: 1px solid #9333ea;
       transition: all 0.3s ease;
     }
 
     .toggle:hover {
-      background: #21262d;
+      background: #3d005c;
     }
   </style>
 </head>
@@ -130,7 +135,17 @@
     <div class="results" id="result"></div>
     <canvas id="chart" width="400" height="200"></canvas>
   </div>
+  
+  <!-- (everything above remains the same) -->
 
+  </script>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 20px; color: #c084fc; font-size: 0.9rem; background: rgba(255,255,255,0.03); margin-top: 50px;">
+    © 𝟤𝟢𝟤𝟧 sᴧɴᴅᴇᴇᴘ sʜᴧʀᴍᴧ ᴧʟʟ ʀɪɢʜᴛs ʀᴇsᴇʀᴠᴇᴅ
+  </footer>
+</body>
+</html>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     async function getGitHubData() {
@@ -175,7 +190,7 @@
           datasets: [{
             label: 'GitHub Metrics',
             data: [data.followers, data.following, data.public_repos],
-            backgroundColor: ['#58a6ff', '#1f6feb', '#238636']
+            backgroundColor: ['#d946ef', '#a855f7', '#7e22ce']
           }]
         },
         options: {
@@ -199,8 +214,8 @@
         body.style.color = '#111';
         document.querySelector('.container').style.background = 'rgba(255,255,255,0.9)';
       } else {
-        body.style.background = '#0d1117';
-        body.style.color = '#fff';
+        body.style.background = 'linear-gradient(145deg, #0f001a, #1a002f)';
+        body.style.color = '#f0eaff';
         document.querySelector('.container').style.background = 'rgba(255,255,255,0.05)';
       }
     }
@@ -236,7 +251,9 @@
       for (let p of particles) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = '#58a6ff';
+        ctx.fillStyle = '#c084fc';
+        ctx.shadowColor = '#c084fc';
+        ctx.shadowBlur = 8;
         ctx.fill();
 
         p.x += p.dx;
@@ -252,4 +269,4 @@
     drawParticles();
   </script>
 </body>
-  </html>
+</html>
