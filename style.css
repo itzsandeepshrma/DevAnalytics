@@ -1,0 +1,116 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(145deg, #0f001a, #1a002f);
+  color: #f0eaff;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #c084fc33 0%, transparent 70%);
+  z-index: -2;
+}
+
+canvas.particles {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.container {
+  max-width: 600px;
+  margin: 100px auto 0;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 40px #c084fc88;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.7rem;
+  color: #d9a3ff;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px #c084fc;
+}
+
+.input-box {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  outline: none;
+  box-shadow: 0 0 10px #c084fc33 inset;
+}
+
+input::placeholder {
+  color: #ccc;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 1rem;
+  background: linear-gradient(135deg, #a855f7, #9333ea);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 0 15px #c084fc88;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #9333ea, #a855f7);
+  transform: scale(1.05);
+}
+
+.results {
+  margin-top: 40px;
+}
+
+.results h2 {
+  color: #e9d5ff;
+  text-shadow: 0 0 5px #c084fc88;
+}
+
+canvas#chart {
+  max-width: 100%;
+  margin-top: 30px;
+}
+
+.toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 14px;
+  background: #2a003d;
+  border-radius: 8px;
+  color: #c084fc;
+  border: 1px solid #9333ea;
+  transition: all 0.3s ease;
+}
+
+.toggle:hover {
+  background: #3d005c;
+  }
