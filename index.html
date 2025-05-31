@@ -1,127 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>DevAnalytics</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(145deg, #0f001a, #1a002f);
-      color: #f0eaff;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, #c084fc33 0%, transparent 70%);
-      z-index: -2;
-    }
-
-    canvas.particles {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: 100px auto 0;
-      padding: 30px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 0 40px #c084fc88;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 2.7rem;
-      color: #d9a3ff;
-      margin-bottom: 20px;
-      letter-spacing: 2px;
-      text-shadow: 0 0 10px #c084fc;
-    }
-
-    .input-box {
-      position: relative;
-      margin-bottom: 30px;
-    }
-
-    input {
-      width: 100%;
-      padding: 15px;
-      font-size: 1.1rem;
-      border: none;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-      outline: none;
-      box-shadow: 0 0 10px #c084fc33 inset;
-    }
-
-    input::placeholder {
-      color: #ccc;
-    }
-
-    button {
-      padding: 15px 30px;
-      font-size: 1rem;
-      background: linear-gradient(135deg, #a855f7, #9333ea);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s ease;
-      box-shadow: 0 0 15px #c084fc88;
-    }
-
-    button:hover {
-      background: linear-gradient(135deg, #9333ea, #a855f7);
-      transform: scale(1.05);
-    }
-
-    .results {
-      margin-top: 40px;
-    }
-
-    .results h2 {
-      color: #e9d5ff;
-      text-shadow: 0 0 5px #c084fc88;
-    }
-
-    canvas#chart {
-      max-width: 100%;
-      margin-top: 30px;
-    }
-
-    .toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      cursor: pointer;
-      font-size: 14px;
-      padding: 8px 14px;
-      background: #2a003d;
-      border-radius: 8px;
-      color: #c084fc;
-      border: 1px solid #9333ea;
-      transition: all 0.3s ease;
-    }
-
-    .toggle:hover {
-      background: #3d005c;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="toggle" onclick="toggleTheme()">Toggle Theme</div>
@@ -129,144 +13,17 @@
   <div class="container">
     <h1>DevAnalytics</h1>
     <div class="input-box">
-      <input id="username" placeholder="Enter GitHub Username" type="text">
+      <input id="username" placeholder="Enter GitHub Username" type="text" />
     </div>
     <button onclick="getGitHubData()">Analyze</button>
     <div class="results" id="result"></div>
     <canvas id="chart" width="400" height="200"></canvas>
   </div>
-  
-  <!-- (everything above remains the same) -->
 
-  </script>
-
-  <!-- Footer -->
   <footer style="text-align: center; padding: 20px; color: #c084fc; font-size: 0.9rem; background: rgba(255,255,255,0.03); margin-top: 50px;">
     © 𝟤𝟢𝟤𝟧 sᴧɴᴅᴇᴇᴘ sʜᴧʀᴍᴧ ᴧʟʟ ʀɪɢʜᴛs ʀᴇsᴇʀᴠᴇᴅ
   </footer>
-</body>
-</html>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    async function getGitHubData() {
-      const username = document.getElementById('username').value.trim();
-      const resultDiv = document.getElementById('result');
 
-      if (!username) {
-        resultDiv.innerHTML = '<p>Please enter a username.</p>';
-        return;
-      }
-
-      try {
-        const res = await fetch(`https://api.github.com/users/${username}`);
-        if (!res.ok) throw new Error("User not found");
-
-        const data = await res.json();
-
-        resultDiv.innerHTML = `
-          <h2>${data.name || data.login}</h2>
-          <p><strong>Followers:</strong> ${data.followers}</p>
-          <p><strong>Following:</strong> ${data.following}</p>
-          <p><strong>Repos:</strong> ${data.public_repos}</p>
-          <p><strong>Location:</strong> ${data.location || 'N/A'}</p>
-        `;
-
-        showChart(data);
-
-      } catch (err) {
-        resultDiv.innerHTML = `<p>Error: ${err.message}</p>`;
-      }
-    }
-
-    let chart;
-    function showChart(data) {
-      const ctx = document.getElementById('chart').getContext('2d');
-      if (chart) chart.destroy();
-
-      chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Followers', 'Following', 'Repos'],
-          datasets: [{
-            label: 'GitHub Metrics',
-            data: [data.followers, data.following, data.public_repos],
-            backgroundColor: ['#d946ef', '#a855f7', '#7e22ce']
-          }]
-        },
-        options: {
-          responsive: true,
-          animation: {
-            duration: 1500,
-            easing: 'easeOutBounce'
-          },
-          plugins: {
-            legend: { display: false }
-          }
-        }
-      });
-    }
-
-    function toggleTheme() {
-      const body = document.body;
-      body.classList.toggle('light');
-      if (body.classList.contains('light')) {
-        body.style.background = '#f5f5f5';
-        body.style.color = '#111';
-        document.querySelector('.container').style.background = 'rgba(255,255,255,0.9)';
-      } else {
-        body.style.background = 'linear-gradient(145deg, #0f001a, #1a002f)';
-        body.style.color = '#f0eaff';
-        document.querySelector('.container').style.background = 'rgba(255,255,255,0.05)';
-      }
-    }
-
-    // Background particles
-    const canvas = document.querySelector('.particles');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    function initParticles() {
-      particles = [];
-      for (let i = 0; i < 70; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          r: Math.random() * 2 + 1,
-          dx: (Math.random() - 0.5) * 1,
-          dy: (Math.random() - 0.5) * 1
-        });
-      }
-    }
-
-    function drawParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let p of particles) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = '#c084fc';
-        ctx.shadowColor = '#c084fc';
-        ctx.shadowBlur = 8;
-        ctx.fill();
-
-        p.x += p.dx;
-        p.y += p.dy;
-
-        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-      }
-      requestAnimationFrame(drawParticles);
-    }
-
-    initParticles();
-    drawParticles();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
